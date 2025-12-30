@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Question Drawer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Random Question Drawer</h1>
+      <p class="subtitle">
+        Paste questions (one per line), click <b>Start / Reset</b>, then press <b>Enter</b> to draw.
+        Type <code>finish</code> and press Enter to stop.
+      </p>
+    </header>
+
+    <section class="card">
+      <label for="questions" class="label">Questions (one per line)</label>
+      <textarea id="questions" class="textarea" spellcheck="false"
+        placeholder="Example:
+    list all the properties of indirect utility function
+    list all the properties of expenditure function
+    list all the properties of profit function
+    list the duality between utility maximization and expenditure minimization
+    list the duality between profit maximization and cost minimization
+    list the Slutsky equation
+    list the Roy's identity
+    list the formulas for consumer surplus, compensated variation, equivalent variation
+    list the formulas for substitution effect and income effect
+    define pareto efficiency"></textarea>
+
+      <div class="row">
+        <button id="startBtn" class="btn primary">Start / Reset</button>
+        <button id="drawBtn" class="btn" disabled>Draw now</button>
+        <button id="clearBtn" class="btn danger" title="Clears saved questions and resets">Clear saved</button>
+      </div>
+
+      <div class="hint">
+        Tip: after you click <b>Start / Reset</b>, you can just keep pressing Enter to draw new questions.
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="row between">
+        <h2 class="h2">Current question</h2>
+        <span id="status" class="status">Not started</span>
+      </div>
+
+      <div id="questionBox" class="questionBox">Click <b>Start / Reset</b> to begin.</div>
+
+      <div class="row">
+        <label for="command" class="label small">Command</label>
+        <input id="command" class="input" placeholder="Press Enter to draw, or type finish + Enter" />
+      </div>
+      <div class="tiny">
+        The command box is where Enter works. Leave it empty and press Enter to draw.
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Local-only: nothing is uploaded.</span>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
