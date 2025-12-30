@@ -1,7 +1,7 @@
-// Question Drawer (offline)
+// Question Drawer (offline, button-based)
 // - One question per line
-// - Press Enter in the command box to draw
-// - Type 'finish' + Enter to stop
+// - Click 'Draw next question' to draw
+// - Click 'Finish' to stop
 // - Avoid repeats until all are used, then reshuffle
 // - Saves your question list in localStorage
 
@@ -13,9 +13,9 @@ let stopped = false;
 const elQuestions = document.getElementById("questions");
 const elStart = document.getElementById("startBtn");
 const elDraw = document.getElementById("drawBtn");
+const elFinish = document.getElementById("finishBtn");
 const elClear = document.getElementById("clearBtn");
 const elQuestionBox = document.getElementById("questionBox");
-const elCommand = document.getElementById("command");
 const elStatus = document.getElementById("status");
 
 function setStatus(text) {
@@ -31,9 +31,7 @@ function readQuestionsFromTextarea() {
 }
 
 function saveQuestionsToStorage(lines) {
-  try {
-    localStorage.setItem("qd_questions", JSON.stringify(lines));
-  } catch (_) {}
+  try { localStorage.setItem("qd_questions", JSON.stringify(lines)); } catch (_) {}
 }
 
 function loadQuestionsFromStorage() {
@@ -55,18 +53,15 @@ function resetDeck() {
 
   saveQuestionsToStorage(allQuestions);
 
-  elDraw.disabled = allQuestions.length === 0;
-  elCommand.disabled = allQuestions.length === 0;
-  elCommand.value = "";
-  elCommand.focus();
+  const hasQuestions = allQuestions.length > 0;
+  elDraw.disabled = !hasQuestions;
+  elFinish.disabled = !hasQuestions;
 
-  if (allQuestions.length === 0) {
-    elQuestionBox.textContent = "No questions found. Add questions (one per line) then click Start / Reset.";
-    setStatus("No questions");
-  } else {
-    elQuestionBox.textContent = "Ready. Press Enter to draw your first question.";
-    setStatus(`Ready: ${remaining.length} in deck`);
-  }
+  elQuestionBox.textContent = hasQuestions
+    ? "Ready. Click 'Draw next question' to start."
+    : "No questions found. Add questions (one per line) then click Start / Reset.";
+
+  setStatus(hasQuestions ? `Ready: ${remaining.length} in deck` : "No questions");
 }
 
 function reshuffleIfNeeded() {
@@ -82,7 +77,7 @@ function drawQuestion() {
     return;
   }
   if (stopped) {
-    elQuestionBox.textContent = "Stopped. Type Start / Reset to begin again.";
+    elQuestionBox.textContent = "Stopped. Click Start / Reset to begin again.";
     return;
   }
   if (allQuestions.length === 0) {
@@ -103,9 +98,9 @@ function drawQuestion() {
 function stopProgram() {
   stopped = true;
   elDraw.disabled = true;
-  elCommand.disabled = true;
+  elFinish.disabled = true;
   setStatus("Stopped");
-  elQuestionBox.textContent = "Finished. (Type Start / Reset to restart.)";
+  elQuestionBox.textContent = "Finished. (Click Start / Reset to restart.)";
 }
 
 function clearSaved() {
@@ -116,42 +111,15 @@ function clearSaved() {
   started = false;
   stopped = false;
   elDraw.disabled = true;
-  elCommand.disabled = true;
-  elCommand.value = "";
+  elFinish.disabled = true;
   elQuestionBox.textContent = "Cleared. Paste questions and click Start / Reset.";
   setStatus("Not started");
 }
 
-elStart.addEventListener("click", () => {
-  resetDeck();
-});
-
-elDraw.addEventListener("click", () => {
-  drawQuestion();
-  elCommand.focus();
-});
-
-elClear.addEventListener("click", () => {
-  clearSaved();
-});
-
-// Enter key behavior in the command box:
-// - empty + Enter => draw
-// - 'finish' + Enter => stop
-elCommand.addEventListener("keydown", (e) => {
-  if (e.key !== "Enter") return;
-  e.preventDefault();
-
-  const cmd = (elCommand.value || "").trim().toLowerCase();
-  if (cmd === "finish") {
-    stopProgram();
-    return;
-  }
-
-  // any other text: treat as empty, just draw
-  elCommand.value = "";
-  drawQuestion();
-});
+elStart.addEventListener("click", resetDeck);
+elDraw.addEventListener("click", drawQuestion);
+elFinish.addEventListener("click", stopProgram);
+elClear.addEventListener("click", clearSaved);
 
 // On load: populate textarea from storage if available
 const saved = loadQuestionsFromStorage();
