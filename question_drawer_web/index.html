@@ -11,8 +11,8 @@
     <header class="header">
       <h1>Random Question Drawer</h1>
       <p class="subtitle">
-        Paste questions (one per line), click <b>Start / Reset</b>, then press <b>Enter</b> to draw.
-        Type <code>finish</code> and press Enter to stop.
+        Paste questions (one per line), click <b>Start / Reset</b>, then click <b>Draw next question</b>.
+        Click <b>Finish</b> to stop.
       </p>
     </header>
 
@@ -33,12 +33,13 @@
 
       <div class="row">
         <button id="startBtn" class="btn primary">Start / Reset</button>
-        <button id="drawBtn" class="btn" disabled>Draw now</button>
+        <button id="drawBtn" class="btn" disabled>Draw next question</button>
+        <button id="finishBtn" class="btn danger" disabled>Finish</button>
         <button id="clearBtn" class="btn danger" title="Clears saved questions and resets">Clear saved</button>
       </div>
 
       <div class="hint">
-        Tip: after you click <b>Start / Reset</b>, you can just keep pressing Enter to draw new questions.
+        Tip: This page saves your question list in your browser. Use <b>Clear saved</b> if you want to wipe it.
       </div>
     </section>
 
@@ -49,14 +50,6 @@
       </div>
 
       <div id="questionBox" class="questionBox">Click <b>Start / Reset</b> to begin.</div>
-
-      <div class="row">
-        <label for="command" class="label small">Command</label>
-        <input id="command" class="input" placeholder="Press Enter to draw, or type finish + Enter" />
-      </div>
-      <div class="tiny">
-        The command box is where Enter works. Leave it empty and press Enter to draw.
-      </div>
     </section>
 
     <footer class="footer">
