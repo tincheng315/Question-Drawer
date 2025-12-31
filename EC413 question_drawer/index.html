@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Question Drawer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Random Question Drawer</h1>
+      <p class="subtitle">
+        Paste questions (one per line), click <b>Start / Reset</b>, then click <b>Draw next question</b>.
+        Click <b>Finish</b> to stop.
+      </p>
+    </header>
+
+    <section class="card">
+      <label for="questions" class="label">Questions (one per line)</label>
+      <textarea id="questions" class="textarea" spellcheck="false"
+        placeholder="Example:
+    Romer model(intermediate goods)
+    Solow model
+    Maltusian model
+    Solow and Malthusian model(agricultural and industrial)
+    Malthusian model with human capital
+    Competitive equilibrium
+    Lucas model
+    BMT model
+    Quality ladder model" ></textarea>
+
+      <div class="row">
+        <button id="startBtn" class="btn primary">Start / Reset</button>
+        <button id="drawBtn" class="btn" disabled>Draw next question</button>
+        <button id="finishBtn" class="btn danger" disabled>Finish</button>
+        <button id="clearBtn" class="btn danger" title="Clears saved questions and resets">Clear saved</button>
+      </div>
+
+      <div class="hint">
+        Tip: This page saves your question list in your browser. Use <b>Clear saved</b> if you want to wipe it.
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="row between">
+        <h2 class="h2">Current question</h2>
+        <span id="status" class="status">Not started</span>
+      </div>
+
+      <div id="questionBox" class="questionBox">Click <b>Start / Reset</b> to begin.</div>
+    </section>
+
+    <footer class="footer">
+      <span>Local-only: nothing is uploaded.</span>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
